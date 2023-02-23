@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Todoey | Account Settings{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h1>Account Settings</h1>
+    <div class="row">
+        <div class="col-lg-4 col-md-5 mx-auto content">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flashes">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="container d-flex justify-content-center">
+                <form method="post" id="changeNameForm" action="{{ url_for('settings', form_id='changeNameForm') }}">
+
+                    <div class="m-3">
+                        <label class="row">Name</label>
+                        <input class="row" name="name" type="text" value="{{ current_user.name }}" required/>
+                    </div>
+                    <div class="m-3">
+                        <label class="row">Email</label>
+                        <input class="row" name="email" type="email" value="{{ current_user.email }}" disabled
+                               readonly/>
+                    </div>
+                    <button type="submit" class="m-3">Confirm changes</button>
+
+                </form>
+            </div>
+            <hr/>
+            <div class="container d-flex justify-content-center">
+                <form method="post" id="changePasswordForm"
+                      action="{{ url_for('settings', form_id='changePasswordForm') }}">
+                    <div class="container">
+                        <div class="m-3">
+                            <label class="row">New Password</label>
+                            <input class="row" name="password" id="password" type="password" minlength="8" required/>
+                        </div>
+                        <div class="m-3">
+                            <label class="row">New Password Confirm</label>
+                            <input class="row" name="confirm_password" id="confirm_password" type="password"
+                                   minlength="8"
+                                   required/>
+                        </div>
+                        <button type="submit" class="m-auto">Change password</button>
+                    </div>
+                </form>
+            </div>
+            <hr/>
+            <div class="container d-flex justify-content-center">
+                <form method="post" id="deleteAccForm" action="{{ url_for('settings', form_id='deleteAccForm') }}">
+                    <div class="m-3">
+                        <p>
+                            WARNING: This will immediately delete your account and all your saved data.</p>
+                    </div>
+                    <button type="submit" class="m-3">Delete my account</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

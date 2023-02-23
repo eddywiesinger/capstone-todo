@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{{ modals() }}
+
+{% block title %}Todoey | Lists{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <h2>Hey, {{ current_user.name }}. Your todos</h2>
+    <div class="row mt-3">
+        {% for list in current_user.lists %}
+        <div class="col-xl-2 col-lg-3 col-sm-6">
+            <div class="card m-2">
+                <div class="card-header"><b>{{ list.title }}</b> ({{ list.creation_date }})</div>
+                <div class="card-body">{{ list.items|length }} Todos</div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ url_for('edit_list', list_id=list.id) }}"><i class="fas fa-edit"></i></a>
+                    <a href="{{ url_for('delete_list', list_id=list.id) }}"><i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-xl-2 col-lg-3 col-sm-6">
+            <div class="card m-2">
+                <div class="card-header">New list</div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-info" data-target="#create_list_modal" data-toggle="modal">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create_list_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content col-md-offset-2 col-md-8">
+            <div class="modal-header">
+                <h5 class="modal-title text-center ">Create New Todo List</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                {{ modal_messages() }}
+                {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark btn-block"}) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

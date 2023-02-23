@@ -1,0 +1,35 @@
+Database Schema:
+
+
+tables: user, list, listitem
+
+
+====================================================
+user:
+- id
+- email
+- password
+- name
+- lists
+
+
+list:
+- id
+- author_id
+- author
+- title
+- date
+- status
+
+
+lititem:
+- id
+- list_id
+- title
+- date
+- status
+
+=====================================================
+relationships:
+
+user <--1:n--> list <--1:n--> listitem

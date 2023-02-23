@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Todoey | Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-5 mx-auto content">
+            <h1>Sign Up Here</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flashes error-text">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark btn-block"}) }}
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-5 content mx-auto mt-4">
+            <a class="align-text-left" href="{{ url_for('home') }}">Login</a></div>
+        </div>
+</div>
+{% endblock %}

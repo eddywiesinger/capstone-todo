@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Todoey{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% if current_user.is_authenticated %}
+    <div class="row">
+        <div class="col-lg-4 col-md-5 mx-auto content">
+            <h1>YOOOOOO {{ current_user.name }}</h1>
+            <p>You've got {{ current_user.lists|length }} Todo-lists in total. Move over to <a
+                    href="{{ url_for('show_lists') }}">My Todos</a> to check 'em out.</p>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-4 col-md-5 mx-auto content">
+            <h1>YOOOOOO</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flashes error-text">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark btn-block"}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-5 content mx-auto mt-4">
+            <a class="align-text-left" href="{{ url_for('register') }}">Register</a></div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
